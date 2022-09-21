@@ -138,3 +138,100 @@ but 'stop' is graceful: send SIGTERM, and then SIGKILL after grace period.
 
 ---
 
+### "Entering" in a container
+
+```
+docker container exec -ti 2c bash  # -ti IMPORTANT # 
+    ps -ef
+    ls -la
+    cat /proc/1/cmdline
+     exit
+```
+
+### Copying files in/from containers
+
+```
+docker container cp 2c:/etc/nginx/nginx.conf .
+# SRC - DST 
+```
+
+---
+
+### Important notes about containers
+- startup time versus VM is better with at least one order of magnitude
+- virtualization overhead (raw processing power loss) is almost nonexistent
+- containers are based on two Linux kernel mechanism: cgroups (for resource limiting) and namespaces
+- from the same image you can run multiple containers each with its own namespaces
+- the container run a single process (usually) and when that process is terminated, the container will stop
+
+---
+
+### Exercise
+
+The general syntax for starting containers is
+```
+docker run [flags] IMAGE [WHAT_to_RUN_INSIDE_CONTAINER]
+```
+
+Run and prove the last point using something like (explain commands):
+```
+docker container run -d alpine:latest sleep 30
+docker container run -it ubuntu:latest bash
+```
+
+---
+
+### Final exercises
+
+- start a container with mysql. read the documentation here: https://hub.docker.com/_/mysql 
+- set up a port mapping 13306 -> 3306
+- test the port mapping (nc/telnet port 13306 )
+- try
+  - entering the container
+  - listing mysql files, where are they?
+  - list running processes
+  - stop it and list all containers (both running and stopped)
+  - stop all containers and cleanup everything (docker container rm)
+
+---
+
+#### HINT
+mysql image requires a variable MYSQL_ROOT_PASSWORD :
+```
+docker run --name mysql1 -e MYSQL_ROOT_PASSWORD=my-secret-pw -d mysql
+                       # -e = environment
+```
+
+---
+
+## Docker images
+
+A Docker image is a unit of packaging that contains everything required for an application to run:
+- application code (plus the interpreter if it's an interpreted language)
+- application dependencies, shared libraries
+- configuration files
+- OS constructs. 
+
+If you have an application’s Docker image, the only other thing you need to run that application is a computer running Docker engine.
+
+### Docker image versus container
+- Image = app we want to run plus all libraries, dependencies
+- Container = instance of an image running as a process
+- We can have many containers running from the same image
+- Docker Hub = the default docker image registry (hub.docker.com)
+
+### Image content
+- Images are made up of multiple layers that are stacked on top of each other and represented as a single object.
+- Inside of the image is a minimal operating system (OS) and all of the files and dependencies required to run an application. 
+- Because containers are intended to be fast and lightweight, images tend to be small 
+
+---
+
+### Image registry
+
+- You get Docker images by pulling them from an image registry. 
+- The most common registry is Docker Hub (but others exist) https://hub.docker.com
+- The image pull operation downloads the image to your local Docker host where is cached and then Docker can use it to start one or more containers.
+
+
+
