@@ -22,5 +22,5 @@ TOC
   - share a gdrive document 
     - link https://docs.google.com/document/d/1s8lX4b2GJOENc_QlIfeBw6gnXiuB-5-Prk7RZ1DeNKg/edit?usp=sharing
     - shortened https://tinyurl.com/yvx8zpnw 
-- (Docker[docker/])
+- [Docker](docker/)
 
