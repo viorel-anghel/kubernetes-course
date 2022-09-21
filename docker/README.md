@@ -62,6 +62,8 @@ https://docs.docker.com/engine/install/
 
 ### Short vs long docker commands
 
+| short form    | long form (entity)    | explanation                            |
+| ------------- | --------------------- | -------------------------------------- |
 | docker ps     | docker container ls   | list running containers                |
 | docker run    | docker container run  | start a new container                  |
 | docker images | docker image ls       | list images in local cache             |
