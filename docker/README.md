@@ -72,4 +72,69 @@ https://docs.docker.com/engine/install/
 
 `docker ENTITY help`
 
+---
+
+### Starting and managing containers
+
+```
+docker run -d nginx      # -d = (daemon) run in background
+docker ps
+```
+
+NOTE:
+- automatic image pull 
+- image layers
+- images are cached
+- container ID shown when ran
+- discuss columns from docker ps
+
+More info about containers
+
+```
+docker container inspect $ID
+docker container logs $ID
+docker container port $ID # list port mappings
+docker container top $ID  # processes inside container
+docker container stats # real time resource usage (like top) -> CTRL+C
+```
+
+IMPORTANT: if you start a container without `-d` (daemon / background), uou will not be able 
+to stop it with `CTRL+C`, try `CTRL+\`.
+
+---
+
+### Starting with port mapping
+
+```
+docker container kill 91
+docker run -p 8080:80 -d nginx
+docker ps
+docker container port 2c
+
+nc -vz localhost 8080
+curl http://localhost:8080
+```
+
+The argument -p is doing the port mapping. The left number is a port on the host, the right number a port inside container. 
+
+```
+docker run -p 8081:80 --name nginx2 -d nginx
+docker run -p 8080:80 --name nginx1 -d nginx
+```
+
+---
+
+### Stopping and deleting
+
+`docker container`
+- kill
+- stop / start
+- rm - delete a stopped container
+- ps -a - show all containers, running and stopped
+- pause / unpause
+
+What is the difference between `docker stop` and `docker kill`? Both will stop the container, 
+but 'stop' is graceful: send SIGTERM, and then SIGKILL after grace period.
+
+---
 
