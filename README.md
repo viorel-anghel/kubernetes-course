@@ -11,7 +11,8 @@ We'll try to cover in 3 days
   - what is Kubernetes and why it's useful
   - Using Kubernetes in command line and with YAML files
 
-TOC
+## TOC
+
 - Intro
   - What is this course about 
   - Who am I 
@@ -22,5 +23,16 @@ TOC
   - share a gdrive document 
     - link https://docs.google.com/document/d/1s8lX4b2GJOENc_QlIfeBw6gnXiuB-5-Prk7RZ1DeNKg/edit?usp=sharing
     - shortened https://tinyurl.com/yvx8zpnw 
-- [Docker](docker/)
+- [Docker intro](docker/)
+- [Docker build](docker-build/)
+- [Docker compose](docker-compose/)
+- [Kubernetes intro](kubernetes1/) - kubectl, nodes, pods, namespaces
+- [Kubernetes workloads](kubernetes2/) - labels, deployments, heatlh checks, limits, other workload resources
+- [Kubernetes networking](kubernetes-networking/) - services, ingress
+- [Kubernetes storage](kubernetes-storage/) - PV, PVC, config maps, secrets
+- [Helm](helm/)
+- [Kustomize](kustomize/)
+- [Operators](kubernetes-operators/)
+- [ArgoCD](argocd/) - intro in CI/CD and ArgoCD
+
 
