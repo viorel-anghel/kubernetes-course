@@ -266,3 +266,99 @@ docker image push localhost:5000/nginx:2
 
 ## Docker volumes
 
+- Docker images are read-only objects (you can eventually create new images with the modified data) 
+- Containers are designed to be immutable, they are good for stateless applications
+
+- non-persistent data: we don't need to keep this outside container lifecycle
+  - for example: logs, caching, one-time processing etc
+  - each container will have its own non-persisting storage
+  - stopping AND deleting the container will delete this data!
+  - each container will have a *thin RW layer* for this data
+- persistent data: 
+  - we need to preserve this
+  - containers can have one or more VOLUME(s) to store this data
+  - volumes  are separate objects with lifecycle decoupled from containers
+  - deleting a container with volume(s) will not delete the volume(s)
+
+---
+
+### Docker volume implementation
+
+- Data volumes persist even if the container itself is deleted.
+- Data volumes can be shared and reused among containers.
+- Volumes are in fact directories on the host and they appear inside container as a mounted filesystem
+
+---
+
+### Named volumes vs mounts
+
+You can have *named volumes* and *simple mounts*, the difference between them is: if it starts with **/** then it is a reference to a absolute path, otherwise is a named volume:
+
+```
+docker run -d --name nginx1 -v data:/data nginx 
+docker volume ls
+docker volume inspect data
+
+docker run -d --name nginx2 -v /data:/data nginx
+
+docker inspect nginx2  # check section Mounts
+docker inspect nginx1  # check section Mounts
+```
+
+Another, longer syntax for volumes is `docker run ... --mount source=myvol,target=/data`.
+
+### Exercise: sharing data between containers using volumes
+
+```
+docker run -d --name ubuntu1 --mount source=myvol,target=/data ubuntu sleep 1h
+
+docker run -d --name ubuntu2 --mount source=myvol,target=/data ubuntu sleep 1h
+
+docker exec -ti ubuntu1 bash
+    touch /data/testfile
+[...]
+```
+
+### Exercise: mysql data volume
+
+Start a mysql container but ensure you will keep the data volume under /root/mysql. Verify it is ok after deleting the container.
+
+path inside container: /var/lib/mysql
+
+### Hints
+```
+apt install mysql-client
+mkdir /root/mysql
+docker run -d \
+     --name mysql1 \
+     -v /root/mysql:/var/lib/mysql \
+     -p 1234:3306 \
+     -e MYSQL_ROOT_PASSWORD=123456 \
+     mysql
+
+mysql -h 127.0.0.1 -P 1234 -p
+    CREATE DATABASE abc;
+    SHOW DATABASES;
+```
+
+### Cleaning up unused volumes
+
+Named volumes can be deleted with `docker volume rm <volume-name>`. Directories used as mounts are not handled as docker objects.
+
+```
+docker volume prune
+
+WARNING! This will remove all volumes not used by at least one container.
+Are you sure you want to continue? [y/N] y
+```
+
+### Full docker cleanup
+
+```
+docker system prune --volumes
+```
+
+
+
+
+
