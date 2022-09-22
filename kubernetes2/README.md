@@ -68,7 +68,9 @@ Pods are rarely used in production clusters, because there are some higher level
   - we update the manifest of the Replica Set
   - as a consequence, the Replica Set controller creates/deletes Pods
 
-In practice, you may never need to manipulate ReplicaSet objects: just use a Deployment instead!
+In practice, you may never need to manipulate ReplicaSet objects: the next workload object is better. 
+
+---
 
 ## Deployment
 
