@@ -165,12 +165,12 @@ kubectl config set-context --current --namespace=my-namespace
 ```
 kubectl <VERB> <RESOURCE-TYPE> [<RESOURCE-NAME>]
 
-kubectl get|describe|create|delete  nodes|pods|namespaces
+kubectl get|describe|create|delete  nodes|pods|namespaces [-n namespace]
 ```
 
 ---
 
-## Exercise
+## Exercise with namespaces
 
 - delete all the pods created in namespace default 
 - create a new namespace, create a new nginx pod in this namespace
@@ -182,26 +182,8 @@ kubectl get|describe|create|delete  nodes|pods|namespaces
 
 ## Exercise with dummy pod
 
-TBD
-```
-cd dummy/
-chmod +x cgi-bin/*
+For demo-ing and sometimes for debugging, I have a handy container image which I like to call it `dummy`. From this I can create pod(s) and do stuff.
 
-   less Dockerfile 
-  docker build -t dummy:0.1 .
-  docker run -d  -p 6789:80 --name dummy dummy:0.1
-  docker ps
-  curl http://localhost:6789/cgi-bin/status
-  docker ps
-  docker stop dummy
-
-  docker tag dummy:0.1 localhost:5000/dummy:0.1
-  docker push localhost:5000/dummy:0.1
-
-  vi dummy-pod.yaml 
-  kubectl apply -f dummy-pod.yaml 
-  kubectl get pods
-```
-
+Your exercise here is to create a container image from the `Dockerfile`, then to start a pod from this image, then to enter (exec) into this pod and look around. Use the `dummy` directory in from this repo.
 
 

@@ -1,0 +1,10 @@
+# dummy-pod.yaml
+kind: Pod
+apiVersion: v1
+metadata:
+  name: dummy
+  namespace: default
+spec:
+  containers:
+    - name: dummy
+      image: vvang/dummy:0.3
