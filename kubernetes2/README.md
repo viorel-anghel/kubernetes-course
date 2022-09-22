@@ -52,6 +52,7 @@ kubectl label pod nginx new-label-     # delete a label
 kubectl get pods -l run=nginx -L run
 
 kubectl get nodes -L ingress-ready # show only the nodes with this label
+```
 
 ---
 
