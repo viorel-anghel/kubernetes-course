@@ -186,4 +186,13 @@ For demo-ing and sometimes for debugging, I have a handy container image which I
 
 Your exercise here is to create a container image from the `Dockerfile`, then to start a pod from this image, then to enter (exec) into this pod and look around. Use the `dummy` directory in from this repo.
 
+## More on PODs
+
+As a final recap on pods:
+- we have shown only a few pod parameters, there are many more and some of them will be uncovered later
+- pods can have one or multiple containers, we'll have example of this later in this course
+- the pod is the *atomic* entity in Kubernetes, a pod runs on a single node (Pod cannot "span" multiple nodes)
+- The containers in a Pod can crash, they may or may not get restarted (depending on Pod's restart policy)
+
+
 
