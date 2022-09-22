@@ -233,5 +233,36 @@ If you have an application’s Docker image, the only other thing you need to ru
 - The most common registry is Docker Hub (but others exist) https://hub.docker.com
 - The image pull operation downloads the image to your local Docker host where is cached and then Docker can use it to start one or more containers.
 
+```
+docker image ls       # show locally cached images
+docker image rm nginx
+docker image pull nginx
+docker info | grep Registry
+```
 
+- Image registry -> one or more (usually more) image repositories -> one or more versioned images
+- Docker hub has official (for example nginx, mysql etc) repositories and unofficial repositories
+
+--- 
+
+### Pulling images from various sources
+
+```
+docker image pull nginx:latest
+docker image pull vvang/dummy:0.3   # from https://hub.docker.com/u/vvang 
+docker image pull gcr.io/google-containers/git-sync:v3.1.5
+```
+
+Free and open source image repo software, which can be installed on premises: Nexus, Jfrog, Harbour.
+
+### Using a local image registry
+
+Local image registry -- see https://docs.docker.com/registry/
+```
+docker image pull nginx:latest
+docker image tag nginx:latest localhost:5000/nginx:2
+docker image push localhost:5000/nginx:2
+```
+
+## Docker volumes
 
