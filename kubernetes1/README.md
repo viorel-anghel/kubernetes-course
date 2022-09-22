@@ -23,7 +23,7 @@ kubectl get nodes
 
 We'll also use a Kubernetes cluster started in DigitalOcean. 
 
-I'll share with you the kubeconfig file.
+I'll share with you the kubeconfig file, save it under `~/.kube/config-do`.
 
 ---
 
@@ -47,5 +47,161 @@ kubectl describe node <name>
 ```
 
 ---
+
+## What is a POD?
+
+- Kubernetes uses the concept of POD as the minimal deployable object. 
+- A POD is a group of (usually) one or more containers :
+- running together (on the same node)
+- sharing resources (RAM, CPU; but also network, volumes)
+- pod's containers are created from container images as with Docker
+
+---
+
+## Starting a POD
+
+- many Kubernetes objects (resources) can be created with 
+  - an *imperative* command, for example `kubectl run nginx --image=nginx`
+  - or with a declarative method
+
+For the declarative method, you will usually create a `yaml manifest` describing all the aspects of the resource and then use the command `kubectl apply -f <manifest.yaml>` to create the resources.
+
+```
+# nginx2-pod.yaml
+kind: Pod
+apiVersion: v1
+metadata:
+  name: nginx2
+spec:
+  containers:
+    - name: nginx
+      image: nginx
+# eof
+```
+
+Similarly, you may delete resources:
+- with imperative commands: `kubectl delete pod nginx`
+- with declarative commands: `kubectl delete -f <manifest.yaml>`
+
+---
+
+## Info about running pods
+
+```
+# wide output will show pod's IP and on which node are allocated:
+kubectl get pods -o wide   
+
+# -o yaml will produce an yaml manifest which can be used 
+# to edit/recreate the resource
+kubectl get pod nginx -o yaml >save.yaml
+less save.yaml
+
+# describe will show full info about the resource, including an event log
+kubectl describe pod nginx
+
+# showing logs # no need to specify resource type pod, only pods have logs
+kubectl logs nginx 
+```
+
+## Entering a running pod
+
+As with Docker, we can enter inside a running pod (container) and run commands inside and copy files in out.
+
+```
+kubectl exec -ti nginx -- sh
+kubectl cp nginx:/etc/nginx/nginx.conf /tmp/nginx.conf
+```
+
+---
+
+## Namespaces
+
+- Namespaces allow us to segregate resources
+- By default, kubectl will reffer to the namespace `default`
+- Then we can use -n / --namespace with almost every kubectl command
+
+```
+kubectl get namespaces
+kubectl get pods -n kube-system
+kubectl get pods --all-namespaces # or -A
+```
+
+To create a namespace with imperative commands: `kubectl create namespace my-new-ns`.
+
+To create a namespace with yaml manifest:
+
+```
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: my-new-ns
+```
+
+To create a pod in a namespace with an yaml manifest, one sigle line must be added:
+
+```
+# nginx2-pod.yaml
+kind: Pod
+apiVersion: v1
+metadata:
+  name: nginx2
+  namespace: my-new-ns
+spec:
+  containers:
+    - name: nginx
+      image: nginx
+# eof
+```
+
+If you wish you can set a default namespace with:
+```
+kubectl config set-context --current --namespace=my-namespace
+```
+
+---
+
+## Kubectl style commands
+
+```
+kubectl <VERB> <RESOURCE-TYPE> [<RESOURCE-NAME>]
+
+kubectl get|describe|create|delete  nodes|pods|namespaces
+```
+
+---
+
+## Exercise
+
+- delete all the pods created in namespace default 
+- create a new namespace, create a new nginx pod in this namespace
+    - with imperative commands
+    - with yaml manifests
+- delete the new namespace created above. what's happening with the pods from namespace?
+
+---
+
+## Exercise with dummy pod
+
+TBD
+```
+cd dummy/
+chmod +x cgi-bin/*
+
+   less Dockerfile 
+  docker build -t dummy:0.1 .
+  docker run -d  -p 6789:80 --name dummy dummy:0.1
+  docker ps
+  curl http://localhost:6789/cgi-bin/status
+  docker ps
+  docker stop dummy
+
+  docker tag dummy:0.1 localhost:5000/dummy:0.1
+  docker push localhost:5000/dummy:0.1
+
+  vi dummy-pod.yaml 
+  kubectl apply -f dummy-pod.yaml 
+  kubectl get pods
+```
+
 
 
