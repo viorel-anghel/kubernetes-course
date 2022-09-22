@@ -58,5 +58,18 @@ kubectl get nodes -L ingress-ready # show only the nodes with this label
 
 ## Replicaset
 
+Pods are rarely used in production clusters, because there are some higher level objects, based on pods, which offer various advantages. We'll discuss some of them.
+
+- A *ReplicaSet* is a set of identical (replicated) Pods
+- Defined by a pod template + number of desired replicas
+- If there are not enough Pods, the Replica Set creates more (e.g. in case of node outage; or simply when scaling up)
+- If there are too many Pods, the Replica Set deletes some  (e.g. if a node was disconnected and comes back; or when scaling down)
+- We can scale up/down a Replica Set
+  - we update the manifest of the Replica Set
+  - as a consequence, the Replica Set controller creates/deletes Pods
+
+In practice, you may never need to manipulate ReplicaSet objects: just use a Deployment instead!
+
+## Deployment
 
 
