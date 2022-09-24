@@ -29,7 +29,8 @@ We'll try to cover in 3 days
 - [Kubernetes intro](kubernetes1/) - kubectl, nodes, pods, namespaces
 - [Kubernetes workloads](kubernetes2/) - labels, deployments, heatlh checks, limits, other workload resources
 - [Kubernetes networking](kubernetes-networking/) - services, ingress
-- [Kubernetes storage](kubernetes-storage/) - PV, PVC, config maps, secrets
+- [Kubernetes storage](kubernetes-storage/) - SC, PV, PVC
+- [Config maps and secrets](configmap-secrets) - Configmaps and Secrets
 - [Helm](helm/)
 - [Kustomize](kustomize/)
 - [Operators](kubernetes-operators/)
