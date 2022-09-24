@@ -63,6 +63,123 @@ Probes are like in Liveness: HTTP GET, TCP Socket, Exec. For example, Your conta
 - /live -- ok
 - /ready -- ok
 
+## Creating services
+
+With imperative commands, you can use `kubectl expose ...`. 
+
+For yaml manifests, this is an example:
+```
+# service example
+apiVersion: v1
+kind: Service
+metadata:
+  name: myapp
+  namespace: myapp
+spec:
+  ports:
+  - port: 80
+    targetPort: 8080
+  selector:
+    app: myapp
+```
+
+```
+kubectl get service myapp -n myapp
+kubectl describe service myapp -n myapp
+```
+
+### Exercise with service
+- create a deployment and a service to send requests to it  
+- check accessing the service, using DNS name, from the same namespace and from another namespace, using a
+testing/dummy pod
+
+---
+
+## Accessing Kubernetes from outside
+- we want to access kubernetes services from OUTSIDE the cluster, not from inside
+- one solution is the LoadBalancer service but we don't always have that luxury
+- or with NodePort – high random port
+- another solution is to use "kubectl port-forward" but this is for devops, not for regular users
+- another solution is Kubernetes Ingress
+
+Exercise
+```
+kubectl port-forward service/service-bar 12345:80
+curl localhost:12345
+```
+---
+
+### Example NodePort
+
+```
+# service example
+apiVersion: v1
+kind: Service
+metadata:
+  name: myapp-nodeport
+  namespace: myapp
+spec:
+  type: NodePort
+  ports:
+  - port: 80
+    targetPort: 8080
+  selector:
+    app: myapp
+```
+
+```
+kubectl get svc
+NAME             TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)        AGE
+myapp-nodeport   NodePort    10.43.245.79   <none>        80:31646/TCP   5s
+```
+
+
+## Kubernetes nginx ingress
+- Kubernetes Ingresses allow you to flexibly route traffic from outside your Kubernetes cluster to Services inside your cluster.
+- This is accomplished using 
+  - Ingress Resources, which define rules for routing HTTP and HTTPS traffic to Kubernetes Services, 
+  - and Ingress Controllers, which implement the rules by load balancing traffic and routing it to the appropriate backend Services
+
+### Ingress controller
+- Ingress is a default resource in Kubernetes and define traffic rules
+- Ingress Controllers are NOT efault in Kubernetes, there are many implementations
+- some extra install steps are required, unless the Kubernetes distribution has already did that
+- popular Ingress Controllers: nginx-ingress, traefik and others
+
+### Ingress exercise
+
+```
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: myapp
+  namespace: myapp
+#  annotations:
+#    kubernetes.io/ingress.class: nginx
+spec:
+  rules:
+  - host: "myapp.localdomain"
+    http:
+      paths:
+        - pathType: Prefix
+          path: "/"
+          backend:
+            service:
+              name: myapp
+              port:
+                number: 80
+```
+
+```
+curl --header 'Host: myapp.localdomain' http://<IP>/
+```
+
+
+
+
+
+
+
 
 
 
