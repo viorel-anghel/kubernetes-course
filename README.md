@@ -31,7 +31,7 @@ We'll try to cover in 3 days
 - [Kubernetes networking](kubernetes-networking/) - services, port-forwarding, ingress
 - [Kubernetes storage](kubernetes-storage/) - SC, PV, PVC
 - [Config maps and secrets](configmap-secrets) - environment, Configmaps and Secrets
-- [Helm](helm/) 
+- [Helm](helm/) - using and creating helm charts
 - [Kustomize](kustomize/)
 - [Operators](kubernetes-operators/)
 - [ArgoCD](argocd/) - intro in CI/CD and ArgoCD
