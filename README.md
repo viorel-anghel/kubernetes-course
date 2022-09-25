@@ -27,11 +27,11 @@ We'll try to cover in 3 days
 - [Docker build](docker-build/)
 - [Docker compose](docker-compose/)
 - [Kubernetes intro](kubernetes1/) - kubectl, nodes, pods, namespaces
-- [Kubernetes workloads](kubernetes2/) - labels, deployments, heatlh checks, limits, other workload resources
-- [Kubernetes networking](kubernetes-networking/) - services, ingress
+- [Kubernetes workloads](kubernetes2/) - labels, deployments, health checks, limits, other workload resources
+- [Kubernetes networking](kubernetes-networking/) - services, port-forwarding, ingress
 - [Kubernetes storage](kubernetes-storage/) - SC, PV, PVC
-- [Config maps and secrets](configmap-secrets) - Configmaps and Secrets
-- [Helm](helm/)
+- [Config maps and secrets](configmap-secrets) - environment, Configmaps and Secrets
+- [Helm](helm/) 
 - [Kustomize](kustomize/)
 - [Operators](kubernetes-operators/)
 - [ArgoCD](argocd/) - intro in CI/CD and ArgoCD
