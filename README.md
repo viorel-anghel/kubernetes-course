@@ -32,8 +32,8 @@ We'll try to cover in 3 days
 - [Kubernetes storage](kubernetes-storage/) - SC, PV, PVC
 - [Config maps and secrets](configmap-secrets) - environment, Configmaps and Secrets
 - [Helm](helm/) - using and creating helm charts
-- [Kustomize](kustomize/)
-- [Operators](kubernetes-operators/)
+- [Kustomize](kustomize/) - theory and demo
+- [Operators](kubernetes-operators/) - theory, demo with Zalando Postgres operator
 - [ArgoCD](argocd/) - intro in CI/CD, GitOPS and ArgoCD
 
 
