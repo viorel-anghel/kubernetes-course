@@ -34,6 +34,6 @@ We'll try to cover in 3 days
 - [Helm](helm/) - using and creating helm charts
 - [Kustomize](kustomize/)
 - [Operators](kubernetes-operators/)
-- [ArgoCD](argocd/) - intro in CI/CD and ArgoCD
+- [ArgoCD](argocd/) - intro in CI/CD, GitOPS and ArgoCD
 
 
