@@ -19,6 +19,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get -y install redis-tools
 RUN rm /var/www/html/index.mini-httpd.html && echo ok >/var/www/html/index.html
 RUN mkdir -p /var/www/html/cgi-bin
 COPY cgi-bin/ /var/www/html/cgi-bin
+RUN chmod 755 /var/www/html/cgi-bin/*
 
 USER root
 WORKDIR /root
