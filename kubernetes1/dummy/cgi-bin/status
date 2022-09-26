@@ -1,0 +1,19 @@
+#!/bin/bash
+
+echo 'Content-type: text/plain'
+echo
+
+echo
+echo "hello from $(hostname) $(hostname -i)"
+uptime | egrep -o 'load average[s:][: ].*'
+
+echo
+echo "### ps -ef"
+ps -ef
+
+echo
+echo "### env"
+env
+
+echo
+
